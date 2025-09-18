@@ -5,24 +5,18 @@
   --card-bg: rgba(255,255,255,0.08);
 }
 
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
 body {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* 讓 footer 自動在底部 */
-  align-items: center;
+  font-family: Arial, "Microsoft JhengHei", sans-serif;
   background: var(--bg);
   color: #fff;
-  font-family: Arial, "Microsoft JhengHei", sans-serif;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
-  padding: 20px 0;
 }
 
 /* 浮水印 */
@@ -48,7 +42,6 @@ body::before {
   padding: 20px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.4);
   z-index: 1;
-  flex: 1 0 auto; /* 讓 container 佔據剩餘空間，推 footer */
 }
 
 h1 {
@@ -115,9 +108,10 @@ h1 {
 }
 
 .search-area button:hover {
-  transform: scale(1.1);
+  transform: scale(1.1); /* 懸停放大 */
 }
 
+/* 跳動動畫 keyframes */
 @keyframes bounce {
   0%, 100% { transform: translateY(0); }
   25% { transform: translateY(-5px); }
@@ -138,12 +132,4 @@ h1 {
 @keyframes fadeIn {
   from {opacity: 0; transform: translateY(10px);}
   to {opacity: 1; transform: translateY(0);}
-}
-
-footer {
-  text-align: center;
-  color: var(--muted);
-  font-size: 0.8rem;
-  flex-shrink: 0;
-  margin-top: 10px;
 }
