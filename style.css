@@ -18,6 +18,13 @@ body {
   position: relative;
   overflow-x: hidden;
 }
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin-top: 20px;
+}
+
 
 /* 浮水印 */
 body::before {
