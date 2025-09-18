@@ -1,0 +1,70 @@
+:root {
+  --bg: #0f1724;
+  --accent: #22c1c3;
+  --muted: #94a3b8;
+}
+
+body {
+  font-family: Arial, "Microsoft JhengHei", sans-serif;
+  background: var(--bg);
+  color: #fff;
+  text-align: center;
+  margin: 0;
+  padding: 30px;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+h1 {
+  margin-bottom: 10px;
+}
+
+.lead {
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.search-area {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-area input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+}
+
+.search-area button {
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: none;
+  background: var(--accent);
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button.muted {
+  background: transparent;
+  border: 1px solid var(--muted);
+  color: var(--muted);
+}
+
+#results .card {
+  background: rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
