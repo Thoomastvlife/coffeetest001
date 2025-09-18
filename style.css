@@ -21,7 +21,7 @@ body {
 
 /* 浮水印 */
 body::before {
-  content: "☕ Coffee Lover";
+  content: "☕ 咖啡專屬 查價系統☕️";
   position: fixed;
   top: 50%;
   left: 50%;
