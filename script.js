@@ -1,10 +1,10 @@
 // 假資料庫
 const products = [
-  { id: "1001", name: "抖幣 100", price: 30, currency: "TWD" },
-  { id: "1002", name: "抖幣 500", price: 140, currency: "TWD" },
-  { id: "2001", name: "代儲服務-快速", price: 50, currency: "TWD" },
-  { id: "3001", name: "代儲服務-大額", price: 480, currency: "TWD" },
-  { id: "4001", name: "超大額專屬方案", price: 1200, currency: "TWD" },
+  { id: "1001", name: "抖幣 100", price: XXX, currency: "TWD" },
+  { id: "1002", name: "抖幣 10000", price: 3333, currency: "TWD" },
+  { id: "2001", name: "代儲服務-快速", price: XXX, currency: "TWD" },
+  { id: "3001", name: "代儲服務-大額", price: XXX, currency: "TWD" },
+  { id: "4001", name: "超大額專屬方案", price: XXX, currency: "TWD" },
   { id: "5001", name: "超大額 VIP", price: 50000, currency: "TWD" }
 ];
 
