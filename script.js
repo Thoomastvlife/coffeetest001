@@ -6,8 +6,7 @@ const rateRules = [
   { min: 3000, rate: 3.03 },
   { min: 2000, rate: 3.02 },
   { min: 1000, rate: 3.01 },
-  { min: 100, rate: 3 },
-  // 可新增更多規則
+  { min: 100, rate: 3 }
 ];
 
 function calculate() {
@@ -28,13 +27,15 @@ function calculate() {
   for (let rule of rateRules) {
     if (amount >= rule.min) {
       rate = rule.rate;
-      break; // 找到第一個符合的規則就停止
+      break;
     }
   }
 
-  const displayRate = rateRules.find(r => r.rate === rate)?.rate === 3.05 ? "1 : 3.05" : "1 : 3";
+  // 顯示比例文字，例如 1 : 3.05
+  const displayRate = `1 : ${rate}`;
 
-  const coins = (amount * rate).toFixed(2); // 計算可獲得抖幣
+  // 計算可獲得抖幣
+  const coins = (amount * rate).toFixed(2);
 
   // 顯示結果
   const results = document.getElementById("results");
