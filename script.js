@@ -12,8 +12,8 @@ function calculate() {
   }
 
   // 判斷兌換比例
-  const rate = amount >= 1000 ? 3.05 : 3;
-  const displayRate = amount >= 1000 ? "1 : 3.05" : "1 : 3";
+  const rate = amount >= 2000 ? 3.05 : 3;
+  const displayRate = amount >= 2000 ? "1 : 3.05" : "1 : 3";
 
   // 計算可獲得抖幣
   const coins = (amount * rate).toFixed(2);
