@@ -2,18 +2,18 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>tk代儲 自助查價系統</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="container">
     <h1>tk 代儲 自助查價系統</h1>
-    <p class="lead">請輸入價格查詢商品（範圍 100~50000）</p>
+    <p class="lead">請輸入金額計算可獲得抖幣（範圍 100~50000）</p>
 
     <section class="search-area">
-      <input id="query" type="number" placeholder="輸入價格 (100~50000)">
-      <button onclick="search()">查詢</button>
-      <button onclick="showAll()" class="muted">顯示全部</button>
+      <input id="query" type="number" placeholder="輸入金額 (100~50000)">
+      <button onclick="calculate()">計算</button>
     </section>
 
     <section id="results"></section>
