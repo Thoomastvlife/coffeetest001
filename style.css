@@ -10,61 +10,62 @@ body {
   color: #fff;
   text-align: center;
   margin: 0;
-  padding: 30px;
+  padding: 20px;
 }
 
 .container {
-  max-width: 800px;
+  width: 100%;
+  max-width: 480px; /* 手機友善寬度 */
   margin: auto;
   background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
   padding: 20px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
 }
 
 h1 {
+  font-size: 1.5rem;
   margin-bottom: 10px;
 }
 
 .lead {
+  font-size: 1rem;
   color: var(--muted);
   margin-bottom: 20px;
 }
 
 .search-area {
   display: flex;
+  flex-direction: column;
   gap: 10px;
   margin-bottom: 20px;
 }
 
 .search-area input {
-  flex: 1;
-  padding: 10px;
-  border-radius: 6px;
+  padding: 12px;
+  border-radius: 8px;
   border: none;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .search-area button {
-  padding: 10px 14px;
-  border-radius: 6px;
+  padding: 12px;
+  border-radius: 8px;
   border: none;
   background: var(--accent);
   color: #000;
   font-weight: bold;
+  font-size: 1rem;
   cursor: pointer;
-}
-
-button.muted {
-  background: transparent;
-  border: 1px solid var(--muted);
-  color: var(--muted);
 }
 
 #results .card {
   background: rgba(255,255,255,0.08);
-  border-radius: 8px;
-  padding: 12px;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: space-between;
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 10px;
+  text-align: left;
+  word-break: break-word;
 }
