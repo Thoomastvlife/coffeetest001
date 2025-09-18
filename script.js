@@ -1,4 +1,3 @@
-// 兌換比例規則，可擴充
 const rateRules = [
   { min: 10000, rate: 3.05 },
   { min: 8000, rate: 3.04 },
@@ -12,17 +11,16 @@ const rateRules = [
 // 新增輸入框
 function addInput() {
   const container = document.getElementById("inputs-container");
-  const input = document.createElement("input");
-  input.type = "number";
-  input.className = "amount-input";
-  input.placeholder = "輸入金額 (100~50000)";
-  container.appendChild(input);
+  const item = document.createElement("div");
+  item.className = "draggable-item";
+  item.innerHTML = `<input type="number" class="amount-input" placeholder="輸入金額 (100~50000)">`;
+  container.appendChild(item);
+  enableDragAndDrop(); // 每次新增框都啟用拖曳
 }
 
 // 計算單筆金額
 function calculateCoins(amount) {
   if (isNaN(amount) || amount < 100 || amount > 50000) return null;
-
   let rate = 1;
   for (let rule of rateRules) {
     if (amount >= rule.min) {
@@ -55,7 +53,6 @@ function renderResults(results) {
     container.innerHTML = "<p>請輸入金額並點擊計算</p>";
     return;
   }
-
   container.innerHTML = results.map(r => `
     <div class="card">
       <div>
@@ -66,3 +63,43 @@ function renderResults(results) {
     </div>
   `).join("");
 }
+
+// 拖曳功能
+function enableDragAndDrop() {
+  const container = document.getElementById("inputs-container");
+  let dragItem = null;
+
+  const items = container.querySelectorAll(".draggable-item");
+  items.forEach(item => {
+    item.draggable = true;
+
+    item.ondragstart = e => {
+      dragItem = item;
+      setTimeout(() => item.style.display = 'none', 0);
+    };
+
+    item.ondragend = e => {
+      dragItem = null;
+      item.style.display = 'flex';
+    };
+
+    item.ondragover = e => e.preventDefault();
+
+    item.ondrop = e => {
+      e.preventDefault();
+      if (dragItem && dragItem !== item) {
+        const children = Array.from(container.children);
+        const dragIndex = children.indexOf(dragItem);
+        const dropIndex = children.indexOf(item);
+        if (dragIndex < dropIndex) {
+          container.insertBefore(dragItem, item.nextSibling);
+        } else {
+          container.insertBefore(dragItem, item);
+        }
+      }
+    };
+  });
+}
+
+// 初始啟用拖曳
+enableDragAndDrop();
