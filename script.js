@@ -1,47 +1,56 @@
-// 兌換比例規則陣列（可擴充）
+// 兌換比例規則陣列，可擴充
 const rateRules = [
-    { min: 100, rate: 3 },      // 金額 >= 100 → 3
-  { min: 1000, rate: 3.01 },   // 金額 >= 1000 → 3.05
-  { min: 3000, rate: 3.03 },      // 金額 >= 100 → 3
-  // 可以在這裡新增更多規則，例如：
-  // { min: 50000, rate: 3.2 }
+  { min: 1000, rate: 3.05 },
+  { min: 100, rate: 3 },
+  // 可新增更多規則
 ];
 
-function calculate() {
-  const amount = parseFloat(document.getElementById("query").value.trim());
+// 計算單筆金額的抖幣
+function calculateCoins(amount) {
+  if (amount < 100 || amount > 50000) return null;
 
-  if (isNaN(amount)) {
-    alert("請輸入有效數字！");
-    return;
-  }
-
-  if (amount < 100 || amount > 50000) {
-    alert("金額範圍必須在 100 ~ 50000 之間！");
-    return;
-  }
-
-  // 根據規則找到適合的比例
-  let rate = 1; // 預設比例
+  // 找出對應比例
+  let rate = 1;
   for (let rule of rateRules) {
     if (amount >= rule.min) {
       rate = rule.rate;
-      break; // 找到第一個符合的規則就停止
+      break;
     }
   }
-
-  const displayRate = rateRules.find(r => r.rate === rate)?.rate === 3.05 ? "1 : 3.05" : "1 : 3";
-
-  const coins = (amount * rate).toFixed(2); // 計算可獲得抖幣
-
-  // 顯示結果
-  const results = document.getElementById("results");
-  results.innerHTML = `
-    <div class="card">
-      <div>
-        <strong>輸入金額：${amount} TWD</strong><br>
-        <small>兌換比例：${displayRate}</small><br>
-        <small>可獲得抖幣：${coins}</small>
-      </div>
-    </div>
-  `;
+  const coins = (amount * rate).toFixed(2);
+  return { amount, rate, coins };
 }
+
+// 顯示結果
+function renderResults(results) {
+  const container = document.getElementById("results");
+  if (results.length === 0) {
+    container.innerHTML = "<p>請輸入金額（100~50000）</p>";
+    return;
+  }
+
+  container.innerHTML = results.map(r => {
+    const displayRate = `1 : ${r.rate}`;
+    return `
+      <div class="card">
+        <div>
+          <strong>輸入金額：${r.amount} TWD</strong><br>
+          <small>兌換比例：${displayRate}</small><br>
+          <small>可獲得抖幣：${r.coins}</small>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+// 主要計算函數
+function calculate() {
+  const input1 = parseFloat(document.getElementById("amount1").value.trim());
+  const input2 = parseFloat(document.getElementById("amount2").value.trim());
+
+  const results = [];
+
+  const res1 = calculateCoins(input1);
+  if (res1) results.push(res1);
+
+  const res2 = calculateCoins(in
