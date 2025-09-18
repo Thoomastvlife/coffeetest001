@@ -5,30 +5,29 @@
   --card-bg: rgba(255,255,255,0.08);
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  font-family: Arial, "Microsoft JhengHei", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* footer 自動在底部 */
+  align-items: center;
   background: var(--bg);
   color: #fff;
-  margin: 0;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  font-family: Arial, "Microsoft JhengHei", sans-serif;
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+  padding: 20px 0;
 }
-footer {
-  text-align: center;
-  color: var(--muted);
-  font-size: 0.8rem;
-  margin-top: 20px;
-}
-
 
 /* 浮水印 */
 body::before {
-  content: "☕咖啡專屬查價系統☕️";
+  content: "☕️咖啡專屬查價系統☕️";
   position: fixed;
   top: 50%;
   left: 50%;
@@ -39,29 +38,6 @@ body::before {
   pointer-events: none;
 }
 
-/* 漂浮咖啡豆背景 */
-/*body::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><circle cx="10" cy="10" r="8" fill="rgba(255,255,255,0.05)"/></svg>');
-  background-repeat: repeat;
-  animation: floatBeans 600s linear infinite; /* 動畫時間拉長，慢慢漂浮 */
-  /*
-  z-index: 0;
-}
-
-/* 緩慢漂浮動畫，幅度小 *//*
-@keyframes floatBeans {
-  0% { background-position: 0 0; }
-  100% { background-position: 0 200px; } /* 改小幅度 
-}*/
-
-
 .container {
   width: 100%;
   max-width: 480px;
@@ -71,6 +47,7 @@ body::before {
   padding: 20px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.4);
   z-index: 1;
+  flex: 1 0 auto;
 }
 
 h1 {
@@ -87,7 +64,7 @@ h1 {
 .search-area {
   display: flex;
   flex-direction: column;
-  gap: 15px; /* 框與按鈕間距 */
+  gap: 15px;
   align-items: center;
   margin-bottom: 20px;
 }
@@ -95,7 +72,7 @@ h1 {
 .draggable-container {
   display: flex;
   flex-direction: column;
-  gap: 10px; /* 輸入框間距 */
+  gap: 10px;
   width: 100%;
 }
 
@@ -133,14 +110,13 @@ h1 {
   max-width: 400px;
   margin-top: 5px;
   transition: transform 0.2s;
-  animation: bounce 2s infinite; /* 按鈕跳動動畫 */
+  animation: bounce 2s infinite;
 }
 
 .search-area button:hover {
-  transform: scale(1.1); /* 懸停放大 */
+  transform: scale(1.1);
 }
 
-/* 跳動動畫 keyframes */
 @keyframes bounce {
   0%, 100% { transform: translateY(0); }
   25% { transform: translateY(-5px); }
@@ -161,4 +137,12 @@ h1 {
 @keyframes fadeIn {
   from {opacity: 0; transform: translateY(10px);}
   to {opacity: 1; transform: translateY(0);}
+}
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.8rem;
+  flex-shrink: 0;
+  margin-top: 10px;
 }
