@@ -2,6 +2,7 @@
   --bg: #0f1724;
   --accent: #22c1c3;
   --muted: #94a3b8;
+  --card-bg: rgba(255,255,255,0.08);
 }
 
 body {
@@ -11,19 +12,35 @@ body {
   margin: 0;
   padding: 20px;
   display: flex;
-  justify-content: center;  /* 水平置中 */
-  align-items: flex-start;  /* 頂端對齊 */
+  justify-content: center;
+  align-items: flex-start;
   min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* 浮水印 */
+body::before {
+  content: "☕ Coffee Lover";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-30deg);
+  font-size: 5rem;
+  color: rgba(255, 255, 255, 0.05);
+  z-index: 0;
+  pointer-events: none;
 }
 
 .container {
   width: 100%;
   max-width: 480px;
-  text-align: center;       /* 文字自動置中 */
+  text-align: center;
   background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  z-index: 1;
 }
 
 h1 {
@@ -39,9 +56,9 @@ h1 {
 
 .search-area {
   display: flex;
-  flex-direction: column; /* 上下排列 */
+  flex-direction: column;
   gap: 10px;
-  align-items: center;    /* 元素置中 */
+  align-items: center;
   margin-bottom: 20px;
 }
 
@@ -51,7 +68,7 @@ h1 {
   border: none;
   font-size: 1rem;
   width: 100%;
-  max-width: 400px;       /* 輸入框最大寬度 */
+  max-width: 400px;
   box-sizing: border-box;
 }
 
@@ -65,14 +82,26 @@ h1 {
   font-size: 1rem;
   cursor: pointer;
   width: 100%;
-  max-width: 400px;       /* 按鈕最大寬度 */
+  max-width: 400px;
+  margin-top: 5px;
+  transition: transform 0.2s;
+}
+
+.search-area button:hover {
+  transform: scale(1.05);
 }
 
 #results .card {
-  background: rgba(255,255,255,0.08);
+  background: var(--card-bg);
   border-radius: 10px;
   padding: 15px;
   margin-top: 10px;
-  text-align: center;      /* 卡片文字置中 */
+  text-align: center;
   word-break: break-word;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(10px);}
+  to {opacity: 1; transform: translateY(0);}
 }
