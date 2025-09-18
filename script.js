@@ -10,6 +10,8 @@ const rateRules = [
   // 可新增更多規則
 ];
 
+// 兌換比例規則陣列，可擴充
+
 // 計算單筆金額的抖幣
 function calculateCoins(amount) {
   if (amount < 100 || amount > 50000) return null;
@@ -30,7 +32,7 @@ function calculateCoins(amount) {
 function renderResults(results) {
   const container = document.getElementById("results");
   if (results.length === 0) {
-    container.innerHTML = "<p>請輸入金額（100~50000）</p>";
+    container.innerHTML = "<p>請輸入金額（100~50000）並點擊計算</p>";
     return;
   }
 
@@ -48,7 +50,7 @@ function renderResults(results) {
   }).join("");
 }
 
-// 主要計算函數
+// 主要計算函數（按鈕觸發）
 function calculate() {
   const input1 = parseFloat(document.getElementById("amount1").value.trim());
   const input2 = parseFloat(document.getElementById("amount2").value.trim());
@@ -58,4 +60,11 @@ function calculate() {
   const res1 = calculateCoins(input1);
   if (res1) results.push(res1);
 
-  const res2 = calculateCoins(in
+  const res2 = calculateCoins(input2);
+  if (res2) results.push(res2);
+
+  renderResults(results);
+}
+
+// 預設顯示空結果
+renderResults([]);
