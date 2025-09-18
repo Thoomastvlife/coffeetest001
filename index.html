@@ -8,17 +8,19 @@
 </head>
 <body>
   <main class="container">
-    <h1>tk 代儲 自助查價系統</h1>
-    <p class="lead">請輸入金額計算可獲得抖幣（範圍 100~50000）</p>
+    <h1>☕ tk代儲 自助查價系統</h1>
+    <p class="lead">輸入金額計算可獲得抖幣（範圍 100~50000）</p>
 
     <section class="search-area">
-      <input id="query" type="number" placeholder="輸入金額 (100~50000)">
-      <button onclick="calculate()">計算</button>
+      <div id="inputs-container">
+        <input type="number" class="amount-input" placeholder="輸入金額 (100~50000)">
+      </div>
+      <button onclick="addInput()">➕ 新增金額</button>
+      <button onclick="calculate()">計算所有金額</button>
     </section>
 
     <section id="results"></section>
   </main>
-
-  <script src="script.js"></script>
 </body>
+<script src="script.js"></script>
 </html>
