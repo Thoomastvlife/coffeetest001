@@ -1,3 +1,4 @@
+/* 變數定義 */
 :root {
   --bg: #0f1724;
   --accent: #22c1c3;
@@ -5,6 +6,7 @@
   --card-bg: rgba(255,255,255,0.08);
 }
 
+/* 全局樣式 */
 html, body {
   height: 100%;
   margin: 0;
@@ -25,19 +27,13 @@ body {
   padding: 20px 0;
 }
 
-/* 浮水印 */
-body::before {
-  content: "☕咖啡專屬查價系統☕️";
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(-30deg);
-  font-size: 5rem;
-  color: rgba(255, 255, 255, 0.05);
-  z-index: 0;
-  pointer-events: none;
+/* 標題樣式 */
+h1 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
 }
 
+/* 主要容器 */
 .container {
   width: 100%;
   max-width: 480px;
@@ -50,17 +46,7 @@ body::before {
   z-index: 1;
 }
 
-h1 {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-}
-
-.lead {
-  font-size: 1rem;
-  color: var(--muted);
-  margin-bottom: 20px;
-}
-
+/* 輸入區域 */
 .search-area {
   display: flex;
   flex-direction: column;
@@ -69,23 +55,6 @@ h1 {
   width: 100%;
   box-sizing: border-box;
   margin-bottom: 20px;
-}
-
-.draggable-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-}
-
-.draggable-item {
-  width: 100%;
-  cursor: grab;
-}
-
-.draggable-item:active {
-  cursor: grabbing;
-  opacity: 0.8;
 }
 
 .search-area input {
@@ -126,6 +95,7 @@ h1 {
   75% { transform: translateY(-3px); }
 }
 
+/* 結果區域 */
 #results {
   display: flex;
   flex-direction: column;
