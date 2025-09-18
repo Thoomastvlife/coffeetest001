@@ -33,7 +33,7 @@ body::before {
 }
 
 /* 漂浮咖啡豆背景 */
-body::after {
+/*body::after {
   content: '';
   position: fixed;
   top: 0;
@@ -44,14 +44,15 @@ body::after {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><circle cx="10" cy="10" r="8" fill="rgba(255,255,255,0.05)"/></svg>');
   background-repeat: repeat;
   animation: floatBeans 600s linear infinite; /* 動畫時間拉長，慢慢漂浮 */
+  /*
   z-index: 0;
 }
 
-/* 緩慢漂浮動畫，幅度小 */
+/* 緩慢漂浮動畫，幅度小 *//*
 @keyframes floatBeans {
   0% { background-position: 0 0; }
-  100% { background-position: 0 200px; } /* 改小幅度 */
-}
+  100% { background-position: 0 200px; } /* 改小幅度 
+}*/
 
 
 .container {
