@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="container">
+  <main class="container" id="main-container">
     <h1>☕ tk代儲 自助查價系統</h1>
     <p class="lead">輸入金額計算可獲得抖幣（範圍 100~50000）</p>
 
@@ -24,10 +24,12 @@
     <section id="results"></section>
   </main>
 
-  <!-- 中間網頁彈窗 -->
-  <div id="popup" class="popup">
-    <span id="popup-message">其他金額請私信</span>
-    <button id="popup-close">✖</button>
+  <!-- 中間 modal 彈窗 -->
+  <div id="modal-backdrop" class="modal-backdrop">
+    <div id="popup" class="popup">
+      <span id="popup-message">其他金額請私信</span>
+      <button id="popup-close">✖</button>
+    </div>
   </div>
 
   <script src="script.js"></script>
