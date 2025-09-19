@@ -13,12 +13,9 @@
       align-items: center;
       padding: 20px;
     }
-    h1 {
-      color: #fff;
-    }
-    textarea {
+    h1 { color: #fff; }
+    textarea, select {
       width: 300px;
-      height: 100px;
       margin: 10px 0;
       border-radius: 8px;
       padding: 10px;
@@ -26,6 +23,7 @@
       border: none;
       resize: none;
     }
+    textarea { height: 100px; }
     button {
       margin: 10px;
       padding: 10px 20px;
@@ -36,14 +34,13 @@
       background: #fff;
       transition: 0.3s;
     }
-    button:hover {
-      background: #eee;
-    }
+    button:hover { background: #eee; }
     #result {
       margin-top: 20px;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: bold;
       color: #fff;
+      white-space: pre-line;
     }
   </style>
 </head>
@@ -56,6 +53,15 @@
   <label style="color:white;">請輸入參加名單（每行一個）：</label>
   <textarea id="participants" placeholder="例如：\n小明\n小華\n小美"></textarea>
 
+  <label style="color:white;">選擇抽出人數：</label>
+  <select id="count">
+    <option value="1">1 人</option>
+    <option value="2">2 人</option>
+    <option value="3">3 人</option>
+    <option value="5">5 人</option>
+    <option value="10">10 人</option>
+  </select>
+
   <button onclick="draw()">開始抽獎</button>
   <div id="result"></div>
 
@@ -63,19 +69,35 @@
     function draw() {
       const prizeText = document.getElementById("prizes").value.trim();
       const participantText = document.getElementById("participants").value.trim();
+      const count = parseInt(document.getElementById("count").value);
 
       if (!prizeText || !participantText) {
         alert("請先輸入獎項和參加名單！");
         return;
       }
 
-      const prizes = prizeText.split("\n").map(p => p.trim()).filter(p => p);
-      const participants = participantText.split("\n").map(p => p.trim()).filter(p => p);
+      let prizes = prizeText.split("\n").map(p => p.trim()).filter(p => p);
+      let participants = participantText.split("\n").map(p => p.trim()).filter(p => p);
 
-      const randomPrize = prizes[Math.floor(Math.random() * prizes.length)];
-      const randomParticipant = participants[Math.floor(Math.random() * participants.length)];
+      if (count > participants.length) {
+        alert("參加人數不足！");
+        return;
+      }
+      if (count > prizes.length) {
+        alert("獎項數量不足，請新增更多獎項！");
+        return;
+      }
 
-      document.getElementById("result").textContent = `🎉 恭喜 ${randomParticipant} 抽中 ${randomPrize}！`;
+      // 打亂陣列
+      participants = participants.sort(() => Math.random() - 0.5);
+      prizes = prizes.sort(() => Math.random() - 0.5);
+
+      let winners = [];
+      for (let i = 0; i < count; i++) {
+        winners.push(`${participants[i]} 🎉 抽中 ${prizes[i]}`);
+      }
+
+      document.getElementById("result").textContent = winners.join("\n");
     }
   </script>
 </body>
