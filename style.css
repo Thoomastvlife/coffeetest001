@@ -154,3 +154,9 @@ h1 { font-size: 1.5rem; margin-bottom: 10px; }
   from { opacity:1; transform: translateY(0); }
   to { opacity:0; transform: translateY(-20px); }
 }
+
+/* 背景模糊 class */
+.blurred {
+  filter: blur(2px);
+  transition: filter 0.3s;
+}
