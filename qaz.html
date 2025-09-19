@@ -1,44 +1,82 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Google 表單 Entry ID 抓取工具</title>
-<style>
-body { font-family: Arial, "Microsoft JhengHei", sans-serif; padding: 20px; background: #0f1724; color: #fff;}
-input, button { padding: 10px; margin: 5px 0; width: 80%; max-width: 400px; border-radius: 6px; border: none;}
-button { background: #22c1c3; font-weight: bold; cursor: pointer;}
-textarea { width: 100%; height: 200px; margin-top: 10px; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>抽獎系統</title>
+  <style>
+    body {
+      font-family: "Microsoft JhengHei", sans-serif;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #fff;
+    }
+    textarea {
+      width: 300px;
+      height: 100px;
+      margin: 10px 0;
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 14px;
+      border: none;
+      resize: none;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #fff;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #eee;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
-<h2>Google 表單 Entry ID 抓取工具</h2>
-<input type="text" id="formURL" placeholder="輸入你的 Google 表單網址"><br>
-<button onclick="grabEntries()">抓取 Entry ID</button>
-<textarea id="result" placeholder="抓取結果會顯示在這裡"></textarea>
+  <h1>🎁 幸運抽獎系統 🎁</h1>
 
-<script>
-function grabEntries() {
-  const url = document.getElementById('formURL').value.trim();
-  if(!url) { alert('請輸入表單網址'); return; }
+  <label style="color:white;">請輸入獎項（每行一個）：</label>
+  <textarea id="prizes" placeholder="例如：\niPhone 15 Pro\nSwitch\n禮券 500元"></textarea>
 
-  fetch(url)
-    .then(resp => resp.text())
-    .then(html => {
-      // 用正則抓取 entry ID
-      const regex = /name="(entry\.\d+)"/g;
-      let match;
-      let ids = [];
-      while((match = regex.exec(html)) !== null) {
-        ids.push(match[1]);
+  <label style="color:white;">請輸入參加名單（每行一個）：</label>
+  <textarea id="participants" placeholder="例如：\n小明\n小華\n小美"></textarea>
+
+  <button onclick="draw()">開始抽獎</button>
+  <div id="result"></div>
+
+  <script>
+    function draw() {
+      const prizeText = document.getElementById("prizes").value.trim();
+      const participantText = document.getElementById("participants").value.trim();
+
+      if (!prizeText || !participantText) {
+        alert("請先輸入獎項和參加名單！");
+        return;
       }
-      document.getElementById('result').value = ids.length ? ids.join('\n') : '沒有抓到 entry ID，請確認網址可公開訪問';
-    })
-    .catch(err => { 
-      console.error(err);
-      alert('抓取失敗，可能表單無法訪問或跨域問題');
-    });
-}
-</script>
+
+      const prizes = prizeText.split("\n").map(p => p.trim()).filter(p => p);
+      const participants = participantText.split("\n").map(p => p.trim()).filter(p => p);
+
+      const randomPrize = prizes[Math.floor(Math.random() * prizes.length)];
+      const randomParticipant = participants[Math.floor(Math.random() * participants.length)];
+
+      document.getElementById("result").textContent = `🎉 恭喜 ${randomParticipant} 抽中 ${randomPrize}！`;
+    }
+  </script>
 </body>
 </html>
