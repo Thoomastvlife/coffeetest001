@@ -119,4 +119,16 @@ function enableDragAndDrop() {
       if (dragItem && dragItem !== item) {
         const children = Array.from(container.children);
         const dragIndex = children.indexOf(dragItem);
-        const dropIndex
+        const dropIndex = children.indexOf(item);
+        if (dragIndex < dropIndex) {
+          container.insertBefore(dragItem, item.nextSibling);
+        } else {
+          container.insertBefore(dragItem, item);
+        }
+      }
+    };
+  });
+}
+
+// 初始啟用拖曳
+enableDragAndDrop();
