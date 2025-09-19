@@ -40,6 +40,11 @@ function calculate() {
 
   inputs.forEach(input => {
     const val = parseFloat(input.value.trim());
+    if (isNaN(val)) return; // 空白跳過
+    if (val < 100 || val > 50000) {
+      alert("其他金額請私信");
+      return;
+    }
     const res = calculateCoins(val);
     if (res) results.push(res);
   });
