@@ -19,7 +19,6 @@ body {
   overflow-x: hidden;
 }
 
-/* 浮水印 */
 body::before {
   content: "☕咖啡專屬查價系統☕️";
   position: fixed;
@@ -44,17 +43,12 @@ body::before {
   transition: filter 0.3s;
 }
 
+.blurred { filter: blur(2px); }
+
 h1 { font-size: 1.5rem; margin-bottom: 10px; }
 .lead { font-size: 1rem; color: var(--muted); margin-bottom: 20px; }
 
-.search-area {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
+.search-area { display: flex; flex-direction: column; gap: 15px; align-items: center; margin-bottom: 20px; }
 .draggable-container { display: flex; flex-direction: column; gap: 10px; width: 100%; }
 .draggable-item { width: 100%; cursor: grab; }
 .draggable-item:active { cursor: grabbing; opacity: 0.8; }
@@ -67,7 +61,6 @@ h1 { font-size: 1.5rem; margin-bottom: 10px; }
   width: 100%;
   max-width: 400px;
   box-sizing: border-box;
-  margin-bottom: 0;
 }
 
 .search-area button {
@@ -81,7 +74,6 @@ h1 { font-size: 1.5rem; margin-bottom: 10px; }
   cursor: pointer;
   width: 100%;
   max-width: 400px;
-  margin-top: 5px;
   transition: transform 0.2s;
   animation: bounce 2s infinite;
 }
@@ -107,7 +99,7 @@ h1 { font-size: 1.5rem; margin-bottom: 10px; }
 
 @keyframes fadeIn { from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
 
-/* ===== modal 背景 ===== */
+/* modal 背景 */
 .modal-backdrop {
   position: fixed;
   top: 0; left: 0;
@@ -119,7 +111,7 @@ h1 { font-size: 1.5rem; margin-bottom: 10px; }
   z-index: 9999;
 }
 
-/* ===== 中間彈窗 ===== */
+/* 中間彈窗 */
 .popup {
   position: relative;
   background: #fff;
@@ -132,7 +124,6 @@ h1 { font-size: 1.5rem; margin-bottom: 10px; }
   text-align: center;
   transform: translateY(-20px);
   opacity: 0;
-  animation: popupShow 0.5s forwards;
 }
 
 .popup button {
@@ -145,18 +136,5 @@ h1 { font-size: 1.5rem; margin-bottom: 10px; }
   cursor: pointer;
 }
 
-@keyframes popupShow {
-  from { opacity:0; transform: translateY(-20px); }
-  to { opacity:1; transform: translateY(0); }
-}
-
-@keyframes popupHide {
-  from { opacity:1; transform: translateY(0); }
-  to { opacity:0; transform: translateY(-20px); }
-}
-
-/* 背景模糊 class */
-.blurred {
-  filter: blur(2px);
-  transition: filter 0.3s;
-}
+@keyframes popupShow { from { opacity:0; transform: translateY(-20px); } to { opacity:1; transform: translateY(0); } }
+@keyframes popupHide { from { opacity:1; transform: translateY(0); } to { opacity:0; transform: translateY(-20px); } }
