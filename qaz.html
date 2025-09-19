@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google 表單 Entry ID 抓取工具</title>
+<style>
+body { font-family: Arial, "Microsoft JhengHei", sans-serif; padding: 20px; background: #0f1724; color: #fff;}
+input, button { padding: 10px; margin: 5px 0; width: 80%; max-width: 400px; border-radius: 6px; border: none;}
+button { background: #22c1c3; font-weight: bold; cursor: pointer;}
+textarea { width: 100%; height: 200px; margin-top: 10px; }
+</style>
+</head>
+<body>
+<h2>Google 表單 Entry ID 抓取工具</h2>
+<input type="text" id="formURL" placeholder="輸入你的 Google 表單網址"><br>
+<button onclick="grabEntries()">抓取 Entry ID</button>
+<textarea id="result" placeholder="抓取結果會顯示在這裡"></textarea>
+
+<script>
+function grabEntries() {
+  const url = document.getElementById('formURL').value.trim();
+  if(!url) { alert('請輸入表單網址'); return; }
+
+  fetch(url)
+    .then(resp => resp.text())
+    .then(html => {
+      // 用正則抓取 entry ID
+      const regex = /name="(entry\.\d+)"/g;
+      let match;
+      let ids = [];
+      while((match = regex.exec(html)) !== null) {
+        ids.push(match[1]);
+      }
+      document.getElementById('result').value = ids.length ? ids.join('\n') : '沒有抓到 entry ID，請確認網址可公開訪問';
+    })
+    .catch(err => { 
+      console.error(err);
+      alert('抓取失敗，可能表單無法訪問或跨域問題');
+    });
+}
+</script>
+</body>
+</html>
