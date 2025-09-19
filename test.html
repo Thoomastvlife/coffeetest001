@@ -3,24 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>tk代儲測試表單</title>
+<title>tk代儲自助查價系統</title>
 <style>
 body {
   font-family: Arial, "Microsoft JhengHei", sans-serif;
   background: #0f1724;
   color: #fff;
+  display: flex;
+  justify-content: center;
   padding: 20px;
 }
-
 .container {
+  width: 100%;
   max-width: 500px;
-  margin: auto;
   background: rgba(255,255,255,0.05);
   padding: 20px;
   border-radius: 12px;
   text-align: center;
 }
-
 input, button {
   padding: 10px;
   margin: 5px 0;
@@ -29,14 +29,12 @@ input, button {
   width: 80%;
   max-width: 300px;
 }
-
 button {
   background: #22c1c3;
   font-weight: bold;
   cursor: pointer;
   animation: bounce 2s infinite;
 }
-
 @keyframes bounce {
   0%,100% { transform: translateY(0); }
   25% { transform: translateY(-5px); }
@@ -46,10 +44,11 @@ button {
 </style>
 </head>
 <body>
+
 <div class="container">
-  <h1>tk代儲測試表單</h1>
-  <form id="tkForm" action="https://docs.google.com/forms/d/e/你的表單ID/formResponse" method="POST" target="_blank">
-    <input type="number" id="amount" name="entry.第一個EntryID" placeholder="輸入金額" required><br>
+  <h1>tk代儲自助查價系統</h1>
+  <form id="tkForm" action="https://docs.google.com/forms/d/e/1FAIpQLSffhEz1jV9EefwzhR0UQBqPbC9Q0mlUQ4NQ_mCFNGeD5FolTw/formResponse" method="POST" target="_blank">
+    <input type="number" id="amount" name="entry.第一個EntryID" placeholder="輸入金額 (100~50000)" required><br>
     <input type="text" id="coins" name="entry.第二個EntryID" placeholder="可獲得抖幣" readonly><br>
     <input type="text" id="value" name="entry.第三個EntryID" placeholder="幣值" readonly><br>
     <button type="button" onclick="calculateAndSubmit()">計算並送出</button>
@@ -57,30 +56,40 @@ button {
 </div>
 
 <script>
-function calculateAndSubmit() {
+const rateRules = [
+  { min: 10000, rate: 3.05 },
+  { min: 8000, rate: 3.04 },
+  { min: 5000, rate: 3.035 },
+  { min: 3000, rate: 3.03 },
+  { min: 2500, rate: 3.02 },
+  { min: 2000, rate: 3.015 },
+  { min: 1000, rate: 3.01 },
+  { min: 100, rate: 3 }
+];
+
+function calculateAndSubmit(){
   const amount = parseFloat(document.getElementById('amount').value);
-  if(isNaN(amount) || amount < 100 || amount > 50000){
+  if(isNaN(amount) || amount<100 || amount>50000){
     alert("請輸入 100~50000 之間的金額");
     return;
   }
 
-  // 計算可獲得抖幣
-  let rate = 3; // 預設匯率
-  if(amount >= 1000) rate = 3.01;
-  if(amount >= 2000) rate = 3.015;
-  if(amount >= 3000) rate = 3.03;
-  if(amount >= 5000) rate = 3.035;
-  if(amount >= 8000) rate = 3.04;
-  if(amount >= 10000) rate = 3.05;
+  // 計算匯率
+  let rate = 3;
+  for(let rule of rateRules){
+    if(amount>=rule.min){ rate=rule.rate; break; }
+  }
 
-  const coins = (amount * rate).toFixed(2);
-  const value = (coins * 0.5).toFixed(2); // 假設幣值 0.5
+  const coins = (amount*rate).toFixed(2);
+  const value = (coins*0.5).toFixed(2); // 假設幣值0.5
 
   document.getElementById('coins').value = coins;
   document.getElementById('value').value = value;
 
+  // 自動提交 Google 表單
   document.getElementById('tkForm').submit();
 }
 </script>
+
 </body>
 </html>
