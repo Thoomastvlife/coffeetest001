@@ -13,13 +13,20 @@ function showPopup(msg){
   const popup = document.getElementById("popup");
   const backdrop = document.getElementById("modal-backdrop");
   document.getElementById("popup-message").textContent = msg;
+
   backdrop.style.display = "flex";
+  setTimeout(() => popup.classList.add("show"), 10); // 淡入
   document.getElementById("popup-close").onclick = hidePopup;
+
   setTimeout(hidePopup, 3000);
 }
 
 function hidePopup(){
-  document.getElementById("modal-backdrop").style.display = "none";
+  const popup = document.getElementById("popup");
+  const backdrop = document.getElementById("modal-backdrop");
+
+  popup.classList.remove("show");
+  setTimeout(() => { backdrop.style.display = "none"; }, 300);
 }
 
 function addInput(){
