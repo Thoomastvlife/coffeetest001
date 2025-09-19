@@ -9,34 +9,29 @@ const rateRules = [
   { min: 100, rate: 3 }
 ];
 
-// 🔔 顯示錯誤提示
-function showToast(message) {
-  // 先刪除舊的
-  const oldToast = document.querySelector(".toast");
-  if (oldToast) oldToast.remove();
+// 🔔 顯示中間彈窗
+function showPopup(message) {
+  const popup = document.getElementById("popup");
+  const msg = document.getElementById("popup-message");
+  const closeBtn = document.getElementById("popup-close");
 
-  const toast = document.createElement("div");
-  toast.className = "toast";
-  toast.innerHTML = `
-    <span>${message}</span>
-    <span class="close-btn">&times;</span>
-  `;
-  document.body.appendChild(toast);
+  msg.textContent = message;
+  popup.style.display = "block";
+  popup.style.animation = "popupShow 0.5s forwards";
 
-  // 關閉按鈕
-  toast.querySelector(".close-btn").onclick = () => {
-    hideToast(toast);
-  };
+  // 點擊 X 手動關閉
+  closeBtn.onclick = () => hidePopup();
 
   // 3 秒後自動消失
-  setTimeout(() => {
-    hideToast(toast);
-  }, 3000);
+  setTimeout(() => hidePopup(), 3000);
 }
 
-function hideToast(toast) {
-  toast.style.animation = "slideFadeOut 0.6s ease forwards";
-  setTimeout(() => toast.remove(), 600);
+function hidePopup() {
+  const popup = document.getElementById("popup");
+  popup.style.animation = "popupHide 0.5s forwards";
+  setTimeout(() => {
+    popup.style.display = "none";
+  }, 500);
 }
 
 // 新增輸入框
@@ -52,7 +47,7 @@ function addInput() {
 // 計算單筆金額
 function calculateCoins(amount) {
   if (isNaN(amount) || amount < 100 || amount > 50000) {
-    showToast("其他金額請私信");
+    showPopup("其他金額請私信");
     return null;
   }
   let rate = 1;
@@ -124,16 +119,4 @@ function enableDragAndDrop() {
       if (dragItem && dragItem !== item) {
         const children = Array.from(container.children);
         const dragIndex = children.indexOf(dragItem);
-        const dropIndex = children.indexOf(item);
-        if (dragIndex < dropIndex) {
-          container.insertBefore(dragItem, item.nextSibling);
-        } else {
-          container.insertBefore(dragItem, item);
-        }
-      }
-    };
-  });
-}
-
-// 初始啟用拖曳
-enableDragAndDrop();
+        const dropIndex
