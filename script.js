@@ -9,29 +9,33 @@ const rateRules = [
   { min: 100, rate: 3 }
 ];
 
-// 🔔 顯示中間彈窗
+// 🔔 顯示 modal
 function showPopup(message) {
   const popup = document.getElementById("popup");
+  const backdrop = document.getElementById("modal-backdrop");
   const msg = document.getElementById("popup-message");
   const closeBtn = document.getElementById("popup-close");
+  const main = document.getElementById("main-container");
 
   msg.textContent = message;
-  popup.style.display = "block";
+  backdrop.style.display = "flex";
   popup.style.animation = "popupShow 0.5s forwards";
+  main.style.filter = "blur(2px)";
 
-  // 點擊 X 手動關閉
-  closeBtn.onclick = () => hidePopup();
+  closeBtn.onclick = hidePopup;
 
-  // 3 秒後自動消失
-  setTimeout(() => hidePopup(), 3000);
+  setTimeout(hidePopup, 3000);
 }
 
 function hidePopup() {
   const popup = document.getElementById("popup");
+  const backdrop = document.getElementById("modal-backdrop");
+  const main = document.getElementById("main-container");
+
   popup.style.animation = "popupHide 0.5s forwards";
-  setTimeout(() => {
-    popup.style.display = "none";
-  }, 500);
+  main.style.filter = "none";
+
+  setTimeout(() => { backdrop.style.display = "none"; }, 500);
 }
 
 // 新增輸入框
@@ -52,10 +56,7 @@ function calculateCoins(amount) {
   }
   let rate = 1;
   for (let rule of rateRules) {
-    if (amount >= rule.min) {
-      rate = rule.rate;
-      break;
-    }
+    if (amount >= rule.min) { rate = rule.rate; break; }
   }
   const coins = (amount * rate).toFixed(2);
   return { amount, rate, coins };
@@ -65,13 +66,11 @@ function calculateCoins(amount) {
 function calculate() {
   const inputs = document.querySelectorAll(".amount-input");
   const results = [];
-
   inputs.forEach(input => {
     const val = parseFloat(input.value.trim());
     const res = calculateCoins(val);
     if (res) results.push(res);
   });
-
   renderResults(results);
 }
 
@@ -97,34 +96,21 @@ function renderResults(results) {
 function enableDragAndDrop() {
   const container = document.getElementById("inputs-container");
   let dragItem = null;
-
   const items = container.querySelectorAll(".draggable-item");
+
   items.forEach(item => {
     item.draggable = true;
-
-    item.ondragstart = e => {
-      dragItem = item;
-      setTimeout(() => item.style.display = 'none', 0);
-    };
-
-    item.ondragend = e => {
-      dragItem = null;
-      item.style.display = 'flex';
-    };
-
+    item.ondragstart = e => { dragItem = item; setTimeout(()=>item.style.display='none',0); };
+    item.ondragend = e => { dragItem = null; item.style.display='flex'; };
     item.ondragover = e => e.preventDefault();
-
     item.ondrop = e => {
       e.preventDefault();
-      if (dragItem && dragItem !== item) {
-        const children = Array.from(container.children);
-        const dragIndex = children.indexOf(dragItem);
-        const dropIndex = children.indexOf(item);
-        if (dragIndex < dropIndex) {
-          container.insertBefore(dragItem, item.nextSibling);
-        } else {
-          container.insertBefore(dragItem, item);
-        }
+      if(dragItem && dragItem!==item){
+        const children=Array.from(container.children);
+        const dragIndex=children.indexOf(dragItem);
+        const dropIndex=children.indexOf(item);
+        if(dragIndex<dropIndex){ container.insertBefore(dragItem,item.nextSibling);}
+        else{ container.insertBefore(dragItem,item);}
       }
     };
   });
