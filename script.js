@@ -71,7 +71,7 @@ function renderResults(results){
     <div class="card">
       <strong>輸入金額：${r.amount} TWD</strong><br>
       <small>兌換比例：1 : ${r.rate}</small><br>
-      <small>可獲得抖幣：${r.coins}</small>
+      <small>預計可獲得抖幣：${r.coins}</small>
     </div>
   `).join("");
 }
