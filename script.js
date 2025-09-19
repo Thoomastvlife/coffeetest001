@@ -20,11 +20,15 @@ function showPopup(message) {
   msg.textContent = message;
   backdrop.style.display = "flex";
   popup.style.animation = "popupShow 0.5s forwards";
-  main.style.filter = "blur(2px)";
 
+  // 背景模糊
+  main.classList.add("blurred");
+
+  // 點擊 X 手動關閉
   closeBtn.onclick = hidePopup;
 
-  setTimeout(hidePopup, 3000);
+  // 3 秒後自動消失
+  setTimeout(hidePopup, 2000);
 }
 
 function hidePopup() {
@@ -33,7 +37,9 @@ function hidePopup() {
   const main = document.getElementById("main-container");
 
   popup.style.animation = "popupHide 0.5s forwards";
-  main.style.filter = "none";
+
+  // 移除背景模糊
+  main.classList.remove("blurred");
 
   setTimeout(() => { backdrop.style.display = "none"; }, 500);
 }
@@ -89,32 +95,4 @@ function renderResults(results) {
         <small>可獲得抖幣：${r.coins}</small>
       </div>
     </div>
-  `).join("");
-}
-
-// 拖曳功能
-function enableDragAndDrop() {
-  const container = document.getElementById("inputs-container");
-  let dragItem = null;
-  const items = container.querySelectorAll(".draggable-item");
-
-  items.forEach(item => {
-    item.draggable = true;
-    item.ondragstart = e => { dragItem = item; setTimeout(()=>item.style.display='none',0); };
-    item.ondragend = e => { dragItem = null; item.style.display='flex'; };
-    item.ondragover = e => e.preventDefault();
-    item.ondrop = e => {
-      e.preventDefault();
-      if(dragItem && dragItem!==item){
-        const children=Array.from(container.children);
-        const dragIndex=children.indexOf(dragItem);
-        const dropIndex=children.indexOf(item);
-        if(dragIndex<dropIndex){ container.insertBefore(dragItem,item.nextSibling);}
-        else{ container.insertBefore(dragItem,item);}
-      }
-    };
-  });
-}
-
-// 初始啟用拖曳
-enableDragAndDrop();
+  `).joi
