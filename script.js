@@ -19,6 +19,27 @@ function addInput() {
   enableDragAndDrop(); // 每次新增框都啟用拖曳
 }
 
+// 顯示自訂彈窗
+function showPopup(message) {
+  const popup = document.getElementById("popup");
+  const msg = document.getElementById("popup-message");
+  const closeBtn = document.getElementById("popup-close");
+
+  msg.textContent = message;
+  popup.style.display = "block";
+
+  // 3 秒後自動關閉
+  const timer = setTimeout(() => {
+    popup.style.display = "none";
+  }, 3000);
+
+  // 點擊 X 手動關閉
+  closeBtn.onclick = () => {
+    popup.style.display = "none";
+    clearTimeout(timer);
+  };
+}
+
 // 計算單筆金額
 function calculateCoins(amount) {
   if (isNaN(amount) || amount < 100 || amount > 50000) return null;
@@ -42,7 +63,7 @@ function calculate() {
     const val = parseFloat(input.value.trim());
     if (isNaN(val)) return; // 空白跳過
     if (val < 100 || val > 50000) {
-      alert("其他金額請私信");
+      showPopup("其他金額請私信");
       return;
     }
     const res = calculateCoins(val);
