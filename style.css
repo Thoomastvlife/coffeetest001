@@ -43,41 +43,13 @@ body::before {
   z-index: 1;
 }
 
-h1 {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-}
+h1 { font-size: 1.5rem; margin-bottom: 10px; }
+.lead { font-size: 1rem; color: var(--muted); margin-bottom: 20px; }
 
-.lead {
-  font-size: 1rem;
-  color: var(--muted);
-  margin-bottom: 20px;
-}
-
-.search-area {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.draggable-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-}
-
-.draggable-item {
-  width: 100%;
-  cursor: grab;
-}
-
-.draggable-item:active {
-  cursor: grabbing;
-  opacity: 0.8;
-}
+.search-area { display: flex; flex-direction: column; gap: 15px; align-items: center; margin-bottom: 20px; }
+.draggable-container { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+.draggable-item { width: 100%; cursor: grab; }
+.draggable-item:active { cursor: grabbing; opacity: 0.8; }
 
 .search-area input {
   padding: 12px;
@@ -102,6 +74,16 @@ h1 {
   width: 100%;
   max-width: 400px;
   margin-top: 5px;
+  animation: bounce 2s infinite; /* 按鈕跳動動畫 */
+}
+
+.search-area button:hover { transform: scale(1.1); }
+
+@keyframes bounce {
+  0%,100%{transform:translateY(0);}
+  25%{transform:translateY(-5px);}
+  50%{transform:translateY(0);}
+  75%{transform:translateY(-3px);}
 }
 
 #results .card {
@@ -139,9 +121,7 @@ h1 {
   transition: opacity 0.3s ease;
 }
 
-.popup.show {
-  opacity: 1;
-}
+.popup.show { opacity: 1; }
 
 .popup button {
   position:absolute;
