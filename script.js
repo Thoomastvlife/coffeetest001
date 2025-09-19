@@ -9,90 +9,86 @@ const rateRules = [
   { min: 100, rate: 3 }
 ];
 
-// 🔔 顯示 modal
-function showPopup(message) {
+function showPopup(msg){
   const popup = document.getElementById("popup");
   const backdrop = document.getElementById("modal-backdrop");
-  const msg = document.getElementById("popup-message");
-  const closeBtn = document.getElementById("popup-close");
-  const main = document.getElementById("main-container");
-
-  msg.textContent = message;
+  document.getElementById("popup-message").textContent = msg;
   backdrop.style.display = "flex";
-  popup.style.animation = "popupShow 0.5s forwards";
-
-  // 背景模糊
-  main.classList.add("blurred");
-
-  // 點擊 X 手動關閉
-  closeBtn.onclick = hidePopup;
-
-  // 3 秒後自動消失
-  setTimeout(hidePopup, 2000);
+  document.getElementById("popup-close").onclick = hidePopup;
+  setTimeout(hidePopup, 3000);
 }
 
-function hidePopup() {
-  const popup = document.getElementById("popup");
-  const backdrop = document.getElementById("modal-backdrop");
-  const main = document.getElementById("main-container");
-
-  popup.style.animation = "popupHide 0.5s forwards";
-
-  // 移除背景模糊
-  main.classList.remove("blurred");
-
-  setTimeout(() => { backdrop.style.display = "none"; }, 500);
+function hidePopup(){
+  document.getElementById("modal-backdrop").style.display = "none";
 }
 
-// 新增輸入框
-function addInput() {
+function addInput(){
   const container = document.getElementById("inputs-container");
-  const item = document.createElement("div");
-  item.className = "draggable-item";
-  item.innerHTML = `<input type="number" class="amount-input" placeholder="輸入金額 (100~50000)">`;
-  container.appendChild(item);
+  const div = document.createElement("div");
+  div.className = "draggable-item";
+  div.innerHTML = `<input type="number" class="amount-input" placeholder="輸入金額 (100~50000)">`;
+  container.appendChild(div);
   enableDragAndDrop();
 }
 
-// 計算單筆金額
-function calculateCoins(amount) {
-  if (isNaN(amount) || amount < 100 || amount > 50000) {
+function calculateCoins(amount){
+  if(isNaN(amount) || amount<100 || amount>50000){
     showPopup("其他金額請私信");
     return null;
   }
-  let rate = 1;
-  for (let rule of rateRules) {
-    if (amount >= rule.min) { rate = rule.rate; break; }
+  let rate=1;
+  for(let rule of rateRules){
+    if(amount>=rule.min){ rate=rule.rate; break; }
   }
-  const coins = (amount * rate).toFixed(2);
-  return { amount, rate, coins };
+  return { amount, rate, coins:(amount*rate).toFixed(2) };
 }
 
-// 計算所有輸入框
-function calculate() {
+function calculate(){
   const inputs = document.querySelectorAll(".amount-input");
-  const results = [];
-  inputs.forEach(input => {
+  const results=[];
+  inputs.forEach(input=>{
     const val = parseFloat(input.value.trim());
     const res = calculateCoins(val);
-    if (res) results.push(res);
+    if(res) results.push(res);
   });
   renderResults(results);
 }
 
-// 顯示結果
-function renderResults(results) {
+function renderResults(results){
   const container = document.getElementById("results");
-  if (results.length === 0) {
-    container.innerHTML = "<p>請輸入金額並點擊計算</p>";
+  if(results.length===0){
+    container.innerHTML="<p>請輸入金額並點擊計算</p>";
     return;
   }
-  container.innerHTML = results.map(r => `
+  container.innerHTML = results.map(r=>`
     <div class="card">
-      <div>
-        <strong>輸入金額：${r.amount} TWD</strong><br>
-        <small>兌換比例：1 : ${r.rate}</small><br>
-        <small>可獲得抖幣：${r.coins}</small>
-      </div>
+      <strong>輸入金額：${r.amount} TWD</strong><br>
+      <small>兌換比例：1 : ${r.rate}</small><br>
+      <small>可獲得抖幣：${r.coins}</small>
     </div>
-  `).joi
+  `).join("");
+}
+
+function enableDragAndDrop(){
+  const container = document.getElementById("inputs-container");
+  let dragItem=null;
+  const items = container.querySelectorAll(".draggable-item");
+  items.forEach(item=>{
+    item.draggable=true;
+    item.ondragstart = e=>{ dragItem=item; setTimeout(()=>item.style.display='none',0); };
+    item.ondragend = e=>{ dragItem=null; item.style.display='flex'; };
+    item.ondragover = e=>e.preventDefault();
+    item.ondrop = e=>{
+      e.preventDefault();
+      if(dragItem && dragItem!==item){
+        const children=Array.from(container.children);
+        const dragIndex=children.indexOf(dragItem);
+        const dropIndex=children.indexOf(item);
+        if(dragIndex<dropIndex) container.insertBefore(dragItem,item.nextSibling);
+        else container.insertBefore(dragItem,item);
+      }
+    };
+  });
+}
+
+enableDragAndDrop();
