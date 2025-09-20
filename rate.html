@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>匯率查詢系統</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    .rate-box {
+      display: inline-block;
+      padding: 20px;
+      border: 2px solid #333;
+      border-radius: 10px;
+      background: #f9f9f9;
+      font-size: 18px;
+    }
+    select, button {
+      padding: 5px 10px;
+      margin: 10px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>💱 匯率查詢系統</h1>
+  
+  <div class="rate-box">
+    <p>
+      從 
+      <select id="fromCurrency"></select>
+      轉換成 
+      <select id="toCurrency"></select>
+    </p>
+    <button onclick="getRate()">查詢</button>
+    <p id="result">請選擇幣別並點查詢</p>
+  </div>
+
+  <script>
+    const apiUrl = "https://api.frankfurter.app/currencies";
+    const fromCurrency = document.getElementById("fromCurrency");
+    const toCurrency = document.getElementById("toCurrency");
+    const result = document.getElementById("result");
+
+    // 載入幣別清單
+    fetch(apiUrl)
+      .then(res => res.json())
+      .then(data => {
+        for (let code in data) {
+          let option1 = document.createElement("option");
+          let option2 = document.createElement("option");
+          option1.value = option2.value = code;
+          option1.textContent = option2.textContent = `${code} - ${data[code]}`;
+          fromCurrency.appendChild(option1);
+          toCurrency.appendChild(option2);
+        }
+        fromCurrency.value = "USD"; // 預設美元
+        toCurrency.value = "TWD";   // 預設台幣
+      });
+
+    // 查詢匯率
+    function getRate() {
+      const from = fromCurrency.value;
+      const to = toCurrency.value;
+
+      if (from === to) {
+        result.textContent = "請選擇不同的幣別";
+        return;
+      }
+
+      fetch(`https://api.frankfurter.app/latest?from=${from}&to=${to}`)
+        .then(res => res.json())
+        .then(data => {
+          result.textContent = `1 ${from} = ${data.rates[to]} ${to}`;
+        })
+        .catch(() => {
+          result.textContent = "匯率取得失敗";
+        });
+    }
+  </script>
+</body>
+</html>
