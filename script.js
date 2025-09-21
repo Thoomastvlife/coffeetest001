@@ -19,7 +19,7 @@ function showPopup(msg){
   document.getElementById("popup-message").textContent = msg;
 
   backdrop.style.display = "flex";
-  setTimeout(() => popup.classList.add("show"), 10); // 淡入
+  setTimeout(() => popup.classList.add("show"), 10);
   document.getElementById("popup-close").onclick = hidePopup;
 
   setTimeout(hidePopup, 3000);
