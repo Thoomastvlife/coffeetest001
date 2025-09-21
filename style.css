@@ -43,10 +43,20 @@ body::before {
   z-index: 1;
 }
 
-h1 { font-size: 1.5rem; margin-bottom: 10px; }
-.lead { font-size: 1rem; color: var(--muted); margin-bottom: 20px; }
+.lead {
+  font-size: 1rem;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
 
-.search-area { display: flex; flex-direction: column; gap: 15px; align-items: center; margin-bottom: 20px; }
+/* 搜尋區塊 */
+.search-area {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 20px;
+}
 .draggable-container { display: flex; flex-direction: column; gap: 10px; width: 100%; }
 .draggable-item { width: 100%; cursor: grab; }
 .draggable-item:active { cursor: grabbing; opacity: 0.8; }
@@ -59,7 +69,6 @@ h1 { font-size: 1.5rem; margin-bottom: 10px; }
   width: 100%;
   max-width: 400px;
   box-sizing: border-box;
-  margin-bottom: 0;
 }
 
 .search-area button {
@@ -76,7 +85,6 @@ h1 { font-size: 1.5rem; margin-bottom: 10px; }
   margin-top: 5px;
   animation: bounce 2s infinite; /* 按鈕跳動動畫 */
 }
-
 .search-area button:hover { transform: scale(1.1); }
 
 @keyframes bounce {
@@ -106,7 +114,6 @@ h1 { font-size: 1.5rem; margin-bottom: 10px; }
   align-items:center;
   z-index:9999;
 }
-
 .popup {
   position: relative;
   background:#fff;
@@ -120,9 +127,7 @@ h1 { font-size: 1.5rem; margin-bottom: 10px; }
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .popup.show { opacity: 1; }
-
 .popup button {
   position:absolute;
   top:5px;
@@ -131,4 +136,36 @@ h1 { font-size: 1.5rem; margin-bottom: 10px; }
   background:transparent;
   font-size:1rem;
   cursor:pointer;
+}
+
+/* SVG 動態標題 */
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:800);
+
+.svg-title {
+  width: 100%;
+  margin-bottom: 20px;
+  height: 20vh;
+}
+svg { width: 100%; height: 100%; }
+.text {
+  fill: none;
+  stroke-width: 6;
+  stroke-linejoin: round;
+  stroke-dasharray: 70 330;
+  stroke-dashoffset: 0;
+  animation: stroke 6s infinite linear;
+}
+.text:nth-child(5n + 1) { stroke: #F2385A; animation-delay: -1.2s; }
+.text:nth-child(5n + 2) { stroke: #F5A503; animation-delay: -2.4s; }
+.text:nth-child(5n + 3) { stroke: #E9F1DF; animation-delay: -3.6s; }
+.text:nth-child(5n + 4) { stroke: #56D9CD; animation-delay: -4.8s; }
+.text:nth-child(5n + 5) { stroke: #3AA1BF; animation-delay: -6s; }
+
+@keyframes stroke {
+  100% { stroke-dashoffset: -400; }
+}
+
+text {
+  font-family: 'Open Sans', Impact, sans-serif;
+  font-size: clamp(20px, 10vmin, 80px); /* ✅ 自動依照螢幕大小縮放 */
 }
