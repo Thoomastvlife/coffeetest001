@@ -6,9 +6,11 @@ const rateRules = [
   { min: 10000, rate: 3.05 },
   { min: 8000, rate: 3.04 },
   { min: 5000, rate: 3.035 },
+  { min: 4000, rate: 3.033 },
   { min: 3000, rate: 3.03 },
   { min: 2500, rate: 3.02 },
   { min: 2000, rate: 3.015 },
+  { min: 1500, rate: 3.013 },
   { min: 1000, rate: 3.01 },
   { min: 100, rate: 3 }
 ];
