@@ -1,11 +1,5 @@
 const rateRules = [
-  { min: 30000, rate: 3.071 },
-  { min: 25000, rate: 3.067 },
-  { min: 20000, rate: 3.061 },
-  { min: 15000, rate: 3.056 },
-  { min: 10000, rate: 3.05 },
-  { min: 8000, rate: 3.04 },
-  { min: 5000, rate: 3.035 },
+  
   { min: 4000, rate: 3.033 },
   { min: 3000, rate: 3.03 },
   { min: 2500, rate: 3.02 },
@@ -14,6 +8,16 @@ const rateRules = [
   { min: 1000, rate: 3.01 },
   { min: 100, rate: 3 }
 ];
+  //{ min: 30000, rate: 3.071 },
+  //{ min: 25000, rate: 3.067 },
+  //{ min: 20000, rate: 3.061 },
+  //{ min: 15000, rate: 3.056 },
+  //{ min: 10000, rate: 3.05 },
+  //{ min: 8000, rate: 3.04 },
+  //{ min: 5000, rate: 3.035 },
+
+
+
 
 function showPopup(msg){
   const popup = document.getElementById("popup");
