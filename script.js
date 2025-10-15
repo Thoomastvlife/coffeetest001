@@ -19,7 +19,7 @@ const rateRules = [
   { min: 400, rate: 2.953 },
   { min: 350, rate: 2.951 },
   { min: 250, rate: 2.95 },
-  { min: 100, rate: 2.948 }
+  { min: 150, rate: 2.948 }
 ];
   //{ min: 30000, rate: 3.071 },
   //{ min: 25000, rate: 3.067 },
@@ -62,7 +62,7 @@ function addInput(){
 }
 
 function calculateCoins(amount){
-  if(isNaN(amount) || amount<100 || amount>50000){
+  if(isNaN(amount) || amount<150 || amount>50000){
     showPopup("其他金額請私信");
     return null;
   }
