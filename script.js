@@ -7,7 +7,7 @@ const rateRules = [
   { min: 5080, rate: 3.01 },//生日專案
   { min: 5000, rate: 2.995 },
   { min: 4500, rate: 2.990 },
-  { min: 4065, rate: 2.99 },
+  { min: 4065, rate: 2.99 },//專案
   { min: 4064, rate: 3.00 },//生日專案
   { min: 4000, rate: 2.985 },
   { min: 3049, rate: 2.985 },//專案
@@ -23,7 +23,7 @@ const rateRules = [
   { min: 1600, rate: 2.967 },
   { min: 1400, rate: 2.966 },
   { min: 1200, rate: 2.965 },
-  { min: 1017, rate: 2.965 },
+  { min: 1017, rate: 2.965 },//專案
   { min: 1016, rate: 2.97 },//生日專案
   { min: 1000, rate: 2.96 },
   { min: 850, rate: 2.958 },
