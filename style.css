@@ -5,6 +5,7 @@
   --card-bg: rgba(255,255,255,0.08);
 }
 
+/* 基本樣式 */
 body {
   font-family: Arial, "Microsoft JhengHei", sans-serif;
   background: var(--bg);
@@ -15,7 +16,6 @@ body {
   justify-content: center;
   align-items: flex-start;
   min-height: 100vh;
-  position: relative;
   overflow-x: hidden;
 }
 
@@ -28,7 +28,6 @@ body::before {
   transform: translate(-50%, -50%) rotate(-30deg);
   font-size: 5rem;
   color: rgba(255, 255, 255, 0.05);
-  z-index: 0;
   pointer-events: none;
 }
 
@@ -36,137 +35,118 @@ body::before {
   width: 100%;
   max-width: 480px;
   text-align: center;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255,255,255,0.05);
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-  z-index: 1;
 }
 
 .lead {
-  font-size: 1rem;
   color: var(--muted);
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
-/* 搜尋區塊 */
+/* 搜尋區 */
 .search-area {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px;
   align-items: center;
-  margin-bottom: 20px;
 }
-.draggable-container { display: flex; flex-direction: column; gap: 10px; width: 100%; }
-.draggable-item { width: 100%; cursor: grab; }
-.draggable-item:active { cursor: grabbing; opacity: 0.8; }
 
-.search-area input {
+.amount-input {
   padding: 12px;
-  border-radius: 8px;
+  width: 100%;
+  border-radius: 10px;
   border: none;
   font-size: 1rem;
-  width: 100%;
-  max-width: 400px;
-  box-sizing: border-box;
 }
 
 .search-area button {
-  padding: 12px 20px;
-  border-radius: 8px;
+  padding: 12px;
+  width: 100%;
   border: none;
+  border-radius: 8px;
   background: var(--accent);
   color: #000;
   font-weight: bold;
-  font-size: 1rem;
   cursor: pointer;
-  width: 100%;
-  max-width: 400px;
-  margin-top: 5px;
-  animation: bounce 2s infinite; /* 按鈕跳動動畫 */
+  animation: bounce 2s infinite;
 }
-.search-area button:hover { transform: scale(1.1); }
 
 @keyframes bounce {
   0%,100%{transform:translateY(0);}
-  25%{transform:translateY(-5px);}
-  50%{transform:translateY(0);}
-  75%{transform:translateY(-3px);}
+  50%{transform:translateY(-5px);}
 }
 
-#results .card {
+/* 結果卡片 */
+.card {
   background: var(--card-bg);
-  border-radius: 10px;
   padding: 15px;
+  border-radius: 10px;
   margin-top: 10px;
-  text-align: center;
-  word-break: break-word;
 }
 
-/* modal */
+/* Modal 通用 */
 .modal-backdrop {
   position: fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background: rgba(0,0,0,0.4);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-}
-.popup {
-  position: relative;
-  background:#fff;
-  color:#000;
-  padding:20px 30px;
-  border-radius:10px;
-  font-size:1.2rem;
-  font-weight:bold;
-  min-width:240px;
-  text-align:center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.popup.show { opacity: 1; }
-.popup button {
-  position:absolute;
-  top:5px;
-  right:8px;
-  border:none;
-  background:transparent;
-  font-size:1rem;
-  cursor:pointer;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
-/* SVG 動態標題 */
+.popup {
+  background: #fff;
+  color: #000;
+  padding: 20px;
+  border-radius: 10px;
+  min-width: 260px;
+  opacity: 0;
+  transition: opacity .3s;
+  position: relative;
+}
+
+.popup.show {
+  opacity: 1;
+}
+
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  border: none;
+  background: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* SVG 標題動態字 */
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:800);
 
 .svg-title {
-  width: 100%;
-  margin-bottom: 20px;
+  width:100%;
   height: 20vh;
 }
-svg { width: 100%; height: 100%; }
+
 .text {
   fill: none;
   stroke-width: 6;
-  stroke-linejoin: round;
-  stroke-dasharray: 70 330;
-  stroke-dashoffset: 0;
   animation: stroke 6s infinite linear;
 }
-.text:nth-child(5n + 1) { stroke: #F2385A; animation-delay: -1.2s; }
-.text:nth-child(5n + 2) { stroke: #F5A503; animation-delay: -2.4s; }
-.text:nth-child(5n + 3) { stroke: #E9F1DF; animation-delay: -3.6s; }
-.text:nth-child(5n + 4) { stroke: #56D9CD; animation-delay: -4.8s; }
-.text:nth-child(5n + 5) { stroke: #3AA1BF; animation-delay: -6s; }
+
+.text:nth-child(1){stroke:#F2385A}
+.text:nth-child(2){stroke:#F5A503}
+.text:nth-child(3){stroke:#E9F1DF}
+.text:nth-child(4){stroke:#56D9CD}
+.text:nth-child(5){stroke:#3AA1BF}
 
 @keyframes stroke {
-  100% { stroke-dashoffset: -400; }
+  100% {stroke-dashoffset:-400;}
 }
 
 text {
-  font-family: 'Open Sans', Impact, sans-serif;
-  font-size: 180px/* ✅ 自動依照螢幕大小縮放 clamp(20px, 10vmin, 80px);*/
+  font-size: 180px;
 }
-
