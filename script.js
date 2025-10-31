@@ -1,30 +1,61 @@
-const rateRules = [  
-  
+// 🔔 公告列表
+const announcements = [
+  "🎉 歡迎使用咖啡自助查價！",
+  "📌 生日專案已自動內建，不需額外詢問",
+  "⚠️ 150~50000 金額內可自助查價",
+  "📩 特殊方案請私訊"
+];
+
+window.onload = () => {
+  showAnnouncements();
+  enableDragAndDrop();
+};
+
+function showAnnouncements() {
+  const list = document.getElementById("announce-list");
+  list.innerHTML = announcements.map(t => `<li>${t}</li>`).join("");
+
+  const modal = document.getElementById("announce-backdrop");
+  const popup = document.getElementById("announce-popup");
+  modal.style.display = "flex";
+  setTimeout(() => popup.classList.add("show"), 10);
+}
+
+function closeAnnounce() {
+  const modal = document.getElementById("announce-backdrop");
+  const popup = document.getElementById("announce-popup");
+
+  popup.classList.remove("show");
+  setTimeout(() => modal.style.display = "none", 300);
+}
+
+// 📌 兌換表
+const rateRules = [
   { min: 7000, rate: 3.01 },
   { min: 6500, rate: 3.005 },
   { min: 6000, rate: 3.000 },
-  { min: 5081, rate: 2.995 },//專案
-  { min: 5080, rate: 3.01 },//生日專案
+  { min: 5081, rate: 2.995 },
+  { min: 5080, rate: 3.01 },
   { min: 5000, rate: 2.995 },
   { min: 4500, rate: 2.990 },
-  { min: 4065, rate: 2.985 },//專案
-  { min: 4064, rate: 3.00 },//生日專案
+  { min: 4065, rate: 2.985 },
+  { min: 4064, rate: 3.00 },
   { min: 4000, rate: 2.985 },
-  { min: 3049, rate: 2.980 },//專案
-  { min: 3048, rate: 2.99 },//生日專案
+  { min: 3049, rate: 2.980 },
+  { min: 3048, rate: 2.99 },
   { min: 3000, rate: 2.980 },
   { min: 2500, rate: 2.975 },
   { min: 2400, rate: 2.970 },
   { min: 2200, rate: 2.970 },
-  { min: 2033, rate: 2.969 },//專案
-  { min: 2032, rate: 2.98 },//生日專案
+  { min: 2033, rate: 2.969 },
+  { min: 2032, rate: 2.98 },
   { min: 2000, rate: 2.969 },
   { min: 1800, rate: 2.968 },
   { min: 1600, rate: 2.967 },
   { min: 1400, rate: 2.966 },
   { min: 1200, rate: 2.965 },
-  { min: 1017, rate: 2.96 },//專案
-  { min: 1016, rate: 2.97 },//生日專案
+  { min: 1017, rate: 2.96 },
+  { min: 1016, rate: 2.97 },
   { min: 1000, rate: 2.96 },
   { min: 850, rate: 2.958 },
   { min: 700, rate: 2.955 },
@@ -34,17 +65,8 @@ const rateRules = [
   { min: 250, rate: 2.948 },
   { min: 150, rate: 2.945 }
 ];
-  //{ min: 30000, rate: 3.071 },
-  //{ min: 25000, rate: 3.067 },
-  //{ min: 20000, rate: 3.061 },
-  //{ min: 15000, rate: 3.056 },
-  //{ min: 10000, rate: 3.05 },
-  //{ min: 8000, rate: 3.04 },
-  //{ min: 5000, rate: 3.035 },
 
-
-
-
+// ⚠️ 提示 popup
 function showPopup(msg){
   const popup = document.getElementById("popup");
   const backdrop = document.getElementById("modal-backdrop");
@@ -60,78 +82,74 @@ function showPopup(msg){
 function hidePopup(){
   const popup = document.getElementById("popup");
   const backdrop = document.getElementById("modal-backdrop");
-
   popup.classList.remove("show");
-  setTimeout(() => { backdrop.style.display = "none"; }, 300);
+  setTimeout(() => backdrop.style.display = "none", 300);
 }
 
+// ➕ 新增欄位
 function addInput(){
-  const container = document.getElementById("inputs-container");
   const div = document.createElement("div");
   div.className = "draggable-item";
-  div.innerHTML = `<input type="number" class="amount-input" placeholder="輸入金額 (100~50000)">`;
-  container.appendChild(div);
+  div.innerHTML = `<input type="number" class="amount-input" placeholder="輸入金額 (150~50000)">`;
+  document.getElementById("inputs-container").appendChild(div);
   enableDragAndDrop();
 }
 
+// 💰 計算邏輯
 function calculateCoins(amount){
-  if(isNaN(amount) || amount<150 || amount>50000){
+  if(isNaN(amount)||amount<150||amount>50000){
     showPopup("其他金額請私信");
     return null;
   }
-  let rate=1;
-  for(let rule of rateRules){
-    if(amount>=rule.min){ rate=rule.rate; break; }
+  let rate = 1;
+  for(let r of rateRules){
+    if(amount >= r.min) { rate = r.rate; break; }
   }
   return { amount, rate, coins:(amount*rate).toFixed(2) };
 }
 
+// ▶️ 計算
 function calculate(){
-  const inputs = document.querySelectorAll(".amount-input");
   const results=[];
-  inputs.forEach(input=>{
-    const val = parseFloat(input.value.trim());
-    const res = calculateCoins(val);
-    if(res) results.push(res);
+  document.querySelectorAll(".amount-input").forEach(input=>{
+    const val = parseFloat(input.value);
+    const data = calculateCoins(val);
+    if(data) results.push(data);
   });
   renderResults(results);
 }
 
 function renderResults(results){
-  const container = document.getElementById("results");
-  if(results.length===0){
-    container.innerHTML="<p>請輸入金額並點擊計算</p>";
-    return;
-  }
-  container.innerHTML = results.map(r=>`
+  const c = document.getElementById("results");
+  if(!results.length) return c.innerHTML="<p>請輸入金額並計算</p>";
+
+  c.innerHTML = results.map(r=>`
     <div class="card">
-      <strong>輸入金額：${r.amount} TWD</strong><br>
-      <small>兌換比例：1 : ${r.rate}</small><br>
-      <small>預計可獲得抖幣：${r.coins}</small>
+      <b>${r.amount} TWD</b><br>
+      換算比例：${r.rate}<br>
+      可得抖幣：${r.coins}
     </div>
   `).join("");
 }
 
+// 🧲 拖曳排序
 function enableDragAndDrop(){
   const container = document.getElementById("inputs-container");
   let dragItem=null;
-  const items = container.querySelectorAll(".draggable-item");
-  items.forEach(item=>{
-    item.draggable=true;
-    item.ondragstart = e=>{ dragItem=item; setTimeout(()=>item.style.display='none',0); };
-    item.ondragend = e=>{ dragItem=null; item.style.display='flex'; };
-    item.ondragover = e=>e.preventDefault();
-    item.ondrop = e=>{
+  container.querySelectorAll(".draggable-item").forEach(item=>{
+    item.draggable = true;
+    item.ondragstart = () => { dragItem = item; setTimeout(()=>item.style.opacity=.3,0); };
+    item.ondragend = () => { item.style.opacity=1; };
+    item.ondragover = e => e.preventDefault();
+    item.ondrop = e => {
       e.preventDefault();
-      if(dragItem && dragItem!==item){
-        const children=Array.from(container.children);
-        const dragIndex=children.indexOf(dragItem);
-        const dropIndex=children.indexOf(item);
-        if(dragIndex<dropIndex) container.insertBefore(dragItem,item.nextSibling);
+      if(dragItem !== item){
+        const children = [...container.children];
+        const from = children.indexOf(dragItem);
+        const to = children.indexOf(item);
+        if(from<to) container.insertBefore(dragItem,item.nextSibling);
         else container.insertBefore(dragItem,item);
       }
-    };
+    }
   });
 }
-
-enableDragAndDrop();
