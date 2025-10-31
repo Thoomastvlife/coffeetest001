@@ -8,15 +8,16 @@
 </head>
 <body>
   <main class="container" id="main-container">
-
+    
     <!-- SVG 動態標題 -->
     <div class="svg-title">
       <svg viewBox="0 0 1320 300">
         <symbol id="s-text">
           <text text-anchor="middle" x="50%" y="50%" dy=".35em">
-            咖啡查價系統
+           咖啡查價系統
           </text>
-        </symbol>
+        </symbol>  
+
         <use xlink:href="#s-text" class="text"></use>
         <use xlink:href="#s-text" class="text"></use>
         <use xlink:href="#s-text" class="text"></use>
@@ -40,20 +41,20 @@
     <section id="results"></section>
   </main>
 
-  <!-- 公告 Modal -->
-  <div id="announce-backdrop" class="modal-backdrop">
-    <div id="announce-popup" class="popup">
-      <button class="close-btn" onclick="closeAnnounce()">✖</button>
-      <h3>📢 系統公告</h3>
-      <ul id="announce-list"></ul>
+  <!-- 原本彈窗 -->
+  <div id="modal-backdrop" class="modal-backdrop">
+    <div id="popup" class="popup">
+      <span id="popup-message">其他金額請私信</span>
+      <button id="popup-close">✖</button>
     </div>
   </div>
 
-  <!-- 彈窗 -->
-  <div id="modal-backdrop" class="modal-backdrop">
-    <div id="popup" class="popup">
-      <span id="popup-message"></span>
-      <button id="popup-close">✖</button>
+  <!-- ✅ 新公告彈窗 -->
+  <div id="announce-backdrop" class="modal-backdrop">
+    <div class="popup announce">
+      <h3>📢 公告</h3>
+      <ul id="announce-list"></ul>
+      <button id="announce-close">關閉</button>
     </div>
   </div>
 
