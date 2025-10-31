@@ -1,36 +1,6 @@
-// 🔔 公告列表
-const announcements = [
-  "🎉 歡迎使用咖啡自助查價！",
-  "📌 生日專案已自動內建，不需額外詢問",
-  "⚠️ 150~50000 金額內可自助查價",
-  "📩 特殊方案請私訊"
-];
+/* ========== 你的原本程式 ========== */
 
-window.onload = () => {
-  showAnnouncements();
-  enableDragAndDrop();
-};
-
-function showAnnouncements() {
-  const list = document.getElementById("announce-list");
-  list.innerHTML = announcements.map(t => `<li>${t}</li>`).join("");
-
-  const modal = document.getElementById("announce-backdrop");
-  const popup = document.getElementById("announce-popup");
-  modal.style.display = "flex";
-  setTimeout(() => popup.classList.add("show"), 10);
-}
-
-function closeAnnounce() {
-  const modal = document.getElementById("announce-backdrop");
-  const popup = document.getElementById("announce-popup");
-
-  popup.classList.remove("show");
-  setTimeout(() => modal.style.display = "none", 300);
-}
-
-// 📌 兌換表
-const rateRules = [
+const rateRules = [  
   { min: 7000, rate: 3.01 },
   { min: 6500, rate: 3.005 },
   { min: 6000, rate: 3.000 },
@@ -66,7 +36,6 @@ const rateRules = [
   { min: 150, rate: 2.945 }
 ];
 
-// ⚠️ 提示 popup
 function showPopup(msg){
   const popup = document.getElementById("popup");
   const backdrop = document.getElementById("modal-backdrop");
@@ -82,74 +51,100 @@ function showPopup(msg){
 function hidePopup(){
   const popup = document.getElementById("popup");
   const backdrop = document.getElementById("modal-backdrop");
+
   popup.classList.remove("show");
-  setTimeout(() => backdrop.style.display = "none", 300);
+  setTimeout(() => { backdrop.style.display = "none"; }, 300);
 }
 
-// ➕ 新增欄位
 function addInput(){
+  const container = document.getElementById("inputs-container");
   const div = document.createElement("div");
   div.className = "draggable-item";
-  div.innerHTML = `<input type="number" class="amount-input" placeholder="輸入金額 (150~50000)">`;
-  document.getElementById("inputs-container").appendChild(div);
+  div.innerHTML = `<input type="number" class="amount-input" placeholder="輸入金額 (100~50000)">`;
+  container.appendChild(div);
   enableDragAndDrop();
 }
 
-// 💰 計算邏輯
 function calculateCoins(amount){
-  if(isNaN(amount)||amount<150||amount>50000){
+  if(isNaN(amount) || amount<150 || amount>50000){
     showPopup("其他金額請私信");
     return null;
   }
-  let rate = 1;
-  for(let r of rateRules){
-    if(amount >= r.min) { rate = r.rate; break; }
+  let rate=1;
+  for(let rule of rateRules){
+    if(amount>=rule.min){ rate=rule.rate; break; }
   }
   return { amount, rate, coins:(amount*rate).toFixed(2) };
 }
 
-// ▶️ 計算
 function calculate(){
+  const inputs = document.querySelectorAll(".amount-input");
   const results=[];
-  document.querySelectorAll(".amount-input").forEach(input=>{
-    const val = parseFloat(input.value);
-    const data = calculateCoins(val);
-    if(data) results.push(data);
+  inputs.forEach(input=>{
+    const val = parseFloat(input.value.trim());
+    const res = calculateCoins(val);
+    if(res) results.push(res);
   });
   renderResults(results);
 }
 
 function renderResults(results){
-  const c = document.getElementById("results");
-  if(!results.length) return c.innerHTML="<p>請輸入金額並計算</p>";
-
-  c.innerHTML = results.map(r=>`
+  const container = document.getElementById("results");
+  if(results.length===0){
+    container.innerHTML="<p>請輸入金額並點擊計算</p>";
+    return;
+  }
+  container.innerHTML = results.map(r=>`
     <div class="card">
-      <b>${r.amount} TWD</b><br>
-      換算比例：${r.rate}<br>
-      可得抖幣：${r.coins}
+      <strong>輸入金額：${r.amount} TWD</strong><br>
+      <small>兌換比例：1 : ${r.rate}</small><br>
+      <small>預計可獲得抖幣：${r.coins}</small>
     </div>
   `).join("");
 }
 
-// 🧲 拖曳排序
 function enableDragAndDrop(){
   const container = document.getElementById("inputs-container");
   let dragItem=null;
-  container.querySelectorAll(".draggable-item").forEach(item=>{
-    item.draggable = true;
-    item.ondragstart = () => { dragItem = item; setTimeout(()=>item.style.opacity=.3,0); };
-    item.ondragend = () => { item.style.opacity=1; };
-    item.ondragover = e => e.preventDefault();
-    item.ondrop = e => {
+  const items = container.querySelectorAll(".draggable-item");
+  items.forEach(item=>{
+    item.draggable=true;
+    item.ondragstart = e=>{ dragItem=item; setTimeout(()=>item.style.display='none',0); };
+    item.ondragend = e=>{ dragItem=null; item.style.display='flex'; };
+    item.ondragover = e=>e.preventDefault();
+    item.ondrop = e=>{
       e.preventDefault();
-      if(dragItem !== item){
-        const children = [...container.children];
-        const from = children.indexOf(dragItem);
-        const to = children.indexOf(item);
-        if(from<to) container.insertBefore(dragItem,item.nextSibling);
+      if(dragItem && dragItem!==item){
+        const children=Array.from(container.children);
+        const dragIndex=children.indexOf(dragItem);
+        const dropIndex=children.indexOf(item);
+        if(dragIndex<dropIndex) container.insertBefore(dragItem,item.nextSibling);
         else container.insertBefore(dragItem,item);
       }
-    }
+    };
   });
 }
+
+enableDragAndDrop();
+
+/* ========== ✅ 新公告功能 ========== */
+
+const announcements = [
+  "⚠️ 本系統為試算工具，數值僅供參考",
+  "🎁 活動請私訊客服",
+  "⏰ 高峰期回覆較慢，敬請見諒"
+];
+
+const announceList = document.getElementById("announce-list");
+announcements.forEach(text=>{
+  const li=document.createElement("li");
+  li.textContent=text;
+  announceList.appendChild(li);
+});
+
+document.getElementById("announce-close").onclick = () =>
+  document.getElementById("announce-backdrop").style.display = "none";
+
+window.onload = ()=> setTimeout(()=> {
+  document.getElementById("announce-backdrop").style.display = "flex";
+},800);
