@@ -8,16 +8,15 @@
 </head>
 <body>
   <main class="container" id="main-container">
-    
+
     <!-- SVG 動態標題 -->
     <div class="svg-title">
       <svg viewBox="0 0 1320 300">
         <symbol id="s-text">
           <text text-anchor="middle" x="50%" y="50%" dy=".35em">
-           咖啡查價系統
+            咖啡查價系統
           </text>
-        </symbol>  
-
+        </symbol>
         <use xlink:href="#s-text" class="text"></use>
         <use xlink:href="#s-text" class="text"></use>
         <use xlink:href="#s-text" class="text"></use>
@@ -41,10 +40,19 @@
     <section id="results"></section>
   </main>
 
-  <!-- 中間 modal 彈窗 -->
+  <!-- 公告 Modal -->
+  <div id="announce-backdrop" class="modal-backdrop">
+    <div id="announce-popup" class="popup">
+      <button class="close-btn" onclick="closeAnnounce()">✖</button>
+      <h3>📢 系統公告</h3>
+      <ul id="announce-list"></ul>
+    </div>
+  </div>
+
+  <!-- 彈窗 -->
   <div id="modal-backdrop" class="modal-backdrop">
     <div id="popup" class="popup">
-      <span id="popup-message">其他金額請私信</span>
+      <span id="popup-message"></span>
       <button id="popup-close">✖</button>
     </div>
   </div>
